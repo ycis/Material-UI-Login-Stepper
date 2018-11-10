@@ -15,16 +15,37 @@ import Icon from "@material-ui/core/Icon";
 import classNames from "classnames";
 import { getDuration, decrementTimer } from "../../utils/timer";
 import LoginDialog from "./Login";
+import SpeedDial from "@material-ui/lab/SpeedDial";
+import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
+import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
+import SaveIcon from "@material-ui/icons/Save";
+import PrintIcon from "@material-ui/icons/Print";
+import ShareIcon from "@material-ui/icons/Share";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const menuOptions = {
   vertical: "top",
   horizontal: "right"
 };
 
+const actions = [
+  { icon: <FileCopyIcon />, name: "Copy" },
+  { icon: <SaveIcon />, name: "Save" },
+  { icon: <PrintIcon />, name: "Print" },
+  { icon: <ShareIcon />, name: "Share" },
+  { icon: <DeleteIcon />, name: "Delete" }
+];
+
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const styles = theme => ({
   grow: {
     flexGrow: 1
+  },
+  speedDial: {
+    position: "fixed",
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3
   },
   appBar: {
     position: "absolute",
@@ -76,6 +97,7 @@ const FAIconOutline = withStyles(styles)(
 class PrimarySearchAppBar extends Component {
   state = {
     isLoggedIn: false,
+    speedDialOpen: false,
     isAdmin: false,
     anchorEl: null,
     mobileMoreAnchorEl: null,
@@ -175,6 +197,27 @@ class PrimarySearchAppBar extends Component {
       bag.setSubmitting(false);
     }
   };
+
+  handleSdClick = () => {
+    this.setState(state => ({
+      speedDialOpen: !state.speedDialOpen
+    }));
+  };
+
+  handleSdOpen = () => {
+    if (!this.state.isLoggedIn) {
+      this.setState({
+        speedDialOpen: true
+      });
+    }
+  };
+
+  handleSdClose = () => {
+    this.setState({
+      speedDialOpen: false
+    });
+  };
+
   handleOpenDialog = () =>
     this.setState({ open: true, mobileMoreAnchorEl: null });
   handleCloseDialog = () => this.setState({ open: false });
@@ -284,6 +327,39 @@ class PrimarySearchAppBar extends Component {
           handleBack={this.handleBack}
           tempLogin={this.tempLogin}
         />
+        <div
+          style={{
+            zIndex: 1101,
+            display: this.state.speedDialOpen ? "block" : "none",
+            opacity: 0.4,
+            position: "fixed",
+            top: 0,
+            left: 0,
+            backgroundColor: "black",
+            height: "100vh",
+            width: "100vw"
+          }}
+        />
+        <SpeedDial
+          ariaLabel="SpeedDial icon"
+          className={classes.speedDial}
+          hidden={!isLoggedIn}
+          icon={<SpeedDialIcon />}
+          onBlur={this.handleSdClose}
+          onClick={this.handleSdClick}
+          onClose={this.handleSdClose}
+          open={this.state.speedDialOpen}
+        >
+          {actions.map(action => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              tooltipOpen
+              onClick={this.handleSdClick}
+            />
+          ))}
+        </SpeedDial>
       </AppBar>
     );
   }
