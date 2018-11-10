@@ -2,6 +2,7 @@ import React from "react";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
+import Button from "@material-ui/core/Button";
 
 const Transition = props => <Slide direction="up" {...props} />;
 const ResponsiveDialog = withMobileDialog({ breakpoint: "xs" })(

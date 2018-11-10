@@ -36,10 +36,13 @@ const StepOne = withStyles(styles)(
     showPassword,
     titleChecked,
     handlePasswordClick,
-    requestPIN
+    handleCloseDialog,
+    requestPIN,
+    tempLogin
   }) => (
     <div>
       <StepOneHeader
+        handleCloseDialog={handleCloseDialog}
         titleChecked={titleChecked}
         handleTitleClick={handleTitleClick}
       />
@@ -95,7 +98,7 @@ const StepOne = withStyles(styles)(
               <Button
                 fullWidth
                 variant="contained"
-                onClick={requestPIN}
+                onClick={tempLogin}
                 color="primary"
               >
                 Submit

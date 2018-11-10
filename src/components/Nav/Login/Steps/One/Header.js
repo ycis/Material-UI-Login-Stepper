@@ -8,6 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import Switch from "react-switch";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 const styles = theme => ({
   appBar: {
@@ -35,9 +37,21 @@ const UncheckedIcon = withStyles(styles)(({ classes: { userPlusIcon } }) => (
 ));
 
 const StepOneHeader = withStyles(styles)(
-  ({ classes: { appBar }, titleChecked, handleTitleClick }) => (
+  ({
+    classes: { appBar },
+    titleChecked,
+    handleTitleClick,
+    handleCloseDialog
+  }) => (
     <AppBar className={appBar}>
-      <Toolbar>
+      <Toolbar variant="dense">
+        <IconButton
+          color="inherit"
+          onClick={handleCloseDialog}
+          aria-label="Close"
+        >
+          <CloseIcon />
+        </IconButton>
         <Grid container row alignItems={"center"} justify={"space-between"}>
           {titleChecked ? (
             <Typography variant="h6" color="inherit">

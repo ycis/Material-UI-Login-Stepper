@@ -9,7 +9,7 @@ const styles = theme => ({ appBar: { position: "relative" } });
 const StepTwoTitle = withStyles(styles)(
   ({ classes: { appBar }, displayText }) => (
     <AppBar className={appBar}>
-      <Toolbar>
+      <Toolbar variant="dense">
         <Grid container row alignItems={"center"} justify={"space-between"}>
           <Typography variant="h6" color="inherit">
             Account Info
